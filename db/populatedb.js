@@ -55,14 +55,20 @@ CREATE TABLE IF NOT EXISTS users_messages (
 );
 
 INSERT INTO users(firstname, lastname, email, hash, admin) VALUES
-('John', 'Doe', 'john@gmail.com', 'testhash12312', FALSE);
+('John', 'Doe', 'john@gmail.com', 'testhash12312', FALSE),
+('Jane', 'Doe', 'jane@gmail.com', 'testhaha123', TRUE)
+;
 
 INSERT INTO messages(title, data) VALUES
-('Test Message Title', 'Lesgooo');
+('Test Message Title', 'Lesgooo'),
+('Death', 'I am darkness'),
+('Cute', 'He cute')
+;
 
 INSERT INTO users_messages(user_id, message_id) VALUES
-(1,1);
-
+(1,1),
+(1,3),
+(2,2);
 
 `;
 
