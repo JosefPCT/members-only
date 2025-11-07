@@ -21,3 +21,14 @@ module.exports.findUserByEmail = async(email) => {
   const { rows } = await pool.query(sql, [email]);
   return rows[0];
 }
+
+module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = false) => {
+  const sql = `
+    INSERT INTO "users"(firstname, lastname, email, hash, admin) VALUES
+    ($1, $2, $3, $4, $5)
+    RETURNING *;
+  `;
+
+  const { rows } = await pool.query(sql, [firstname, lastname, email, hash, isAdmin]);
+  return rows[0];
+}

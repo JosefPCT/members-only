@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+const utils = require('./utils/passwordUtils');
 
 const { body, validationResult, matchedData } = require("express-validator");
 
@@ -56,11 +57,22 @@ module.exports.postRegister = [
     }
 
     const { email, password, first_name, last_name, admin } = matchedData(req);
-    console.log(email);
-    console.log(password);
-    console.log(first_name);
-    console.log(last_name);
-    console.log(admin);
+
+    const hashedPassword = await utils.genPassword(password);
+    const hash = hashedPassword.hash;
+
+    if(admin){
+      await db.insertUser(first_name, last_name, email, hash, true)
+    } else {
+      await db.insertUser(first_name, last_name, email, hash);
+    }
+
+    // console.log(email);
+    // console.log(password);
+    // console.log(first_name);
+    // console.log(last_name);
+    // console.log(admin);
+    res.redirect('/');
   }
 ];
 
