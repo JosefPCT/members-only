@@ -71,6 +71,13 @@ module.exports.postRegister = [
   }
 ];
 
+module.exports.postLogin = [
+  async(req, res, next) => {
+    console.log(req.body);
+    res.send('POST');
+  }
+];
+
 // GET Routes
 module.exports.getIndex = async(req, res, next) => {
 //   const data = await db.testQuery();
