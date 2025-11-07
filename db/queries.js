@@ -1,12 +1,12 @@
 const pool = require('./pool');
 
 
-module.exports.testQuery = async() => {
-  const sql = `
-    SELECT *
-    FROM test;
-  `;
+// module.exports.testQuery = async() => {
+//   const sql = `
+//     SELECT *
+//     FROM users;
+//   `;
 
-  const { rows } = await pool.query(sql);
-  return rows;
-}
+//   const { rows } = await pool.query(sql);
+//   return rows;
+// }
