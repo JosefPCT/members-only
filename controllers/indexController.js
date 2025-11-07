@@ -6,6 +6,7 @@ const { body, validationResult, matchedData } = require("express-validator");
 
 const emptyErr = `must not be empty`;
 const notSamePassErr = `Password field and Confirm Password field must be the same`;
+const emailAlreadyExistsErr = `Email already exists.`;
 
 const isSamePass = (value, { req }) => {
   if(value !== req.body.password){
@@ -14,9 +15,20 @@ const isSamePass = (value, { req }) => {
   return true;
 }
 
+const emailExists = async (value) => {
+  const data = await db.findUserByEmail(value);
+  if(data){
+    throw new Error(emailAlreadyExistsErr);
+  }
+  return true;
+}
+
 const validateUser = [
   body("email").trim()
-  .notEmpty().withMessage(`Email field ${emptyErr}`),
+  .notEmpty().withMessage(`Email field ${emptyErr}`)
+  .normalizeEmail()
+  .isEmail().withMessage(`Email must be a valid email`)
+  .custom(emailExists),
   body("password").trim()
   .notEmpty().withMessage(`Password field ${emptyErr}`),
   body("confirm_password").trim()
