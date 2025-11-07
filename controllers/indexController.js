@@ -1,5 +1,12 @@
 const db = require('../db/queries');
 
+// POST Routes
+
+module.exports.postRegister = async(req, res, next) => {
+  console.log(req.body);
+};
+
+// GET Routes
 module.exports.getIndex = async(req, res, next) => {
 //   const data = await db.testQuery();
 //   console.log(data[0]);
