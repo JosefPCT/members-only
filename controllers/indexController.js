@@ -67,11 +67,6 @@ module.exports.postRegister = [
       await db.insertUser(first_name, last_name, email, hash);
     }
 
-    // console.log(email);
-    // console.log(password);
-    // console.log(first_name);
-    // console.log(last_name);
-    // console.log(admin);
     res.redirect('/login');
   }
 ];
