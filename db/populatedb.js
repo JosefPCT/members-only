@@ -53,6 +53,17 @@ CREATE TABLE IF NOT EXISTS users_messages (
   message_id INTEGER NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
   PRIMARY KEY (user_id, message_id)
 );
+
+INSERT INTO users(firstname, lastname, email, hash, admin) VALUES
+('John', 'Doe', 'john@gmail.com', 'testhash12312', FALSE);
+
+INSERT INTO messages(title, data) VALUES
+('Test Message Title', 'Lesgooo');
+
+INSERT INTO users_messages(user_id, message_id) VALUES
+(1,1);
+
+
 `;
 
 async function main() {
