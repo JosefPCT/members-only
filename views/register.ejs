@@ -1,6 +1,9 @@
 <%- include('partials/header.ejs') %>
 <main>
   <h1>Registration</h1>
+
+  <%- include('partials/errors') %>
+  
   <div class="card">
     <form action="/register" method="POST">
       <label for="email">Email: </label>

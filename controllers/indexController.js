@@ -1,10 +1,56 @@
 const db = require('../db/queries');
 
+const { body, validationResult, matchedData } = require("express-validator");
+
+// Validation
+
+const emptyErr = `must not be empty`;
+const notSamePassErr = `Password field and Confirm Password field must be the same`;
+
+const isSamePass = (value, { req }) => {
+  if(value !== req.body.password){
+    throw new Error(notSamePassErr)
+  }
+  return true;
+}
+
+const validateUser = [
+  body("email").trim()
+  .notEmpty().withMessage(`Email field ${emptyErr}`),
+  body("password").trim()
+  .notEmpty().withMessage(`Password field ${emptyErr}`),
+  body("confirm_password").trim()
+  .notEmpty().withMessage(`Confirm Password field ${emptyErr}`)
+  .custom(isSamePass),
+  body("first_name").trim()
+  .notEmpty().withMessage(`First name field ${emptyErr}`),
+  body("last_name").trim()
+  .notEmpty().withMessage(`Last name field ${emptyErr}`),
+  body("admin").trim()
+  .optional()
+];
+
 // POST Routes
 
-module.exports.postRegister = async(req, res, next) => {
-  console.log(req.body);
-};
+module.exports.postRegister = [
+  validateUser,
+  async(req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).render('register', {
+        title: 'Register',
+        errors: errors.array()
+      });
+    }
+
+    const { email, password, first_name, last_name, admin } = matchedData(req);
+    console.log(email);
+    console.log(password);
+    console.log(first_name);
+    console.log(last_name);
+    console.log(admin);
+  }
+];
 
 // GET Routes
 module.exports.getIndex = async(req, res, next) => {
