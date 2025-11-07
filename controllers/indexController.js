@@ -72,7 +72,7 @@ module.exports.postRegister = [
     // console.log(first_name);
     // console.log(last_name);
     // console.log(admin);
-    res.redirect('/');
+    res.redirect('/login');
   }
 ];
 
