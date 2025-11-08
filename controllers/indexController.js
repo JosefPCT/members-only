@@ -107,14 +107,22 @@ module.exports.logoutGetRoute = (req, res, next) => {
   // `req.logout()` is now asynchronous now needs a callback
   req.logout((err) => {
     if(err) { return next(err); }
-    res.redirect('/protected-route');
+    // res.redirect('/protected-route');
+    res.redirect('/');
   });
 }
 
 module.exports.getIndex = async(req, res, next) => {
 //   const data = await db.testQuery();
 //   console.log(data[0]);
-  res.render('index', {title: 'Home'});
+  const isAuthenticated = req.isAuthenticated();
+  console.log(isAuthenticated);
+  console.log(req.user);
+  res.render('index', {
+    title: 'Home',
+    user: req.user,
+    isAuthenticated
+  });
 }
 
 module.exports.getRegister = async (req, res, next) => {
@@ -126,7 +134,11 @@ module.exports.getLogin = async(req, res, next) => {
 }
 
 module.exports.loginSuccessGetRoute = (req, res, next) => {
-  res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>'); 
+  console.log('Success, showing user');
+  console.log(req.user);
+  res.redirect('/');
+  // res.redirect(`/user/${req.user.id}`);
+  // res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>'); 
 }
 
 module.exports.loginFailureGetRoute = (req, res, next) => {
