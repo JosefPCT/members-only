@@ -1,7 +1,12 @@
+const passport = require('passport');
+const { body, validationResult, matchedData } = require("express-validator");
+
 const db = require('../db/queries');
 const utils = require('./utils/passwordUtils');
+const { isAuth, isAdmin } = require('./utils/authMiddleware');
 
-const { body, validationResult, matchedData } = require("express-validator");
+
+
 
 // Validation
 
@@ -72,13 +77,40 @@ module.exports.postRegister = [
 ];
 
 module.exports.postLogin = [
-  async(req, res, next) => {
-    console.log(req.body);
-    res.send('POST');
-  }
+  passport.authenticate('local', {
+    failureRedirect: '/login-failure',
+    successRedirect: '/login-success'
+  })
 ];
 
+
+
+
 // GET Routes
+
+module.exports.protectedGetRoute = [
+  isAuth,
+  (req, res, next) => {
+    res.send("You made it to the route");
+  }
+]
+
+module.exports.adminGetRoute = [
+  isAdmin,
+  (req, res, next) => {
+    res.send("You made it to the admin route");
+  }
+]
+
+module.exports.logoutGetRoute = (req, res, next) => {
+  // req.logout();
+  // `req.logout()` is now asynchronous now needs a callback
+  req.logout((err) => {
+    if(err) { return next(err); }
+    res.redirect('/protected-route');
+  });
+}
+
 module.exports.getIndex = async(req, res, next) => {
 //   const data = await db.testQuery();
 //   console.log(data[0]);
@@ -92,3 +124,12 @@ module.exports.getRegister = async (req, res, next) => {
 module.exports.getLogin = async(req, res, next) => {
   res.render('login', {title: 'Login'});
 }
+
+module.exports.loginSuccessGetRoute = (req, res, next) => {
+  res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>'); 
+}
+
+module.exports.loginFailureGetRoute = (req, res, next) => {
+  res.send('You entered the wrong password.');
+}
+

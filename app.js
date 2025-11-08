@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const pgStore = require('connect-pg-simple')(session);
+const passport = require('passport');
 const path = require('path');
 
 const pool = require('./db/pool');
@@ -37,6 +38,22 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
+
+// Passport Authentication
+
+require('./config/passport');
+
+// Has to do with serialize and deserialize of user
+// Express session gives us access to the `req.session` object anything we store in the req.session object will persist into the database under the 'session' collection/table
+app.use(passport.session());
+
+// Logger Middleware
+
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
 
 app.use('/', indexRouter);
 

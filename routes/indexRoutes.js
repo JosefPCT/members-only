@@ -14,4 +14,11 @@ router.post('/register', controller.postRegister);
 router.get('/login', controller.getLogin);
 router.post('/login', controller.postLogin);
 
+router.get('/login-success', controller.loginSuccessGetRoute);
+router.get('/login-failure', controller.loginFailureGetRoute);
+
+router.get('/protected-route', controller.protectedGetRoute);
+router.get('/admin-route', controller.adminGetRoute);
+router.get('/logout', controller.logoutGetRoute);
+
 module.exports = router;
