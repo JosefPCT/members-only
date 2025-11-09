@@ -1,5 +1,13 @@
 <%- include('partials/header.ejs') %>
 <main>
   <h1>Home Page</h1>
+  <% if(locals.messages) { %> 
+    <% messages.forEach(message => { %>
+      <p><%= message.title %></p>
+      <p><%= message.data %></p>
+      <p>From: <%= message.firstname %></p>
+      <p>Added: <%= message.added %></p>
+    <% }); %>
+  <% } %>
 </main>
 <%- include('partials/footer.ejs') %>

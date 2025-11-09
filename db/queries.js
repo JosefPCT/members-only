@@ -44,3 +44,15 @@ module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = fa
   return rows[0];
 }
 
+module.exports.getAllEmailAndUsers = async() => {
+  const sql = `
+    SELECT *
+    FROM users u
+    JOIN users_messages um ON u.id = um.user_id
+    JOIN messages m ON m.id = um.message_id;
+  `;
+
+  const { rows }  = await pool.query(sql);
+  return rows;
+}
+
