@@ -1,12 +1,12 @@
 <nav>
     <% if(locals.isAuthenticated) { %>
       <div>
-        <p>Hello, <%= user.firstname %></p>
+        <p>Hello <% if(user.member) { %> Member<% } %> , <%= user.firstname %></p>
       </div>
       <div>
         <a href="/logout">Logout</a>
       </div>
-      <% if(!(locals.user.member)) { %>
+      <% if((locals.user && (!(locals.user.member)))) { %>
         <a href="/become-a-member">Become a member</a>
       <% } %>
     <% } %>

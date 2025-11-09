@@ -44,6 +44,16 @@ module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = fa
   return rows[0];
 }
 
+module.exports.updateMemberStatusByUserId = async(id) => {
+  const sql = `
+    UPDATE "users"
+    SET member = TRUE
+    WHERE id = $1
+  `;
+
+  await pool.query(sql, [id]);
+}
+
 module.exports.getAllMessagesAndUsers = async() => {
   const sql = `
     SELECT *

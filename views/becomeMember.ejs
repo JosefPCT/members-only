@@ -1,0 +1,9 @@
+<%- include('partials/header.ejs') %>
+<h1>Membership Page</h1>
+<%- include('partials/errors.ejs') %>
+<form action="/become-a-member" method="post">
+  <label for="secret">Enter secret code to become a member:</label>
+  <input type="text" name="secret" id="secret" required>
+  <button type="submit">Enter Code</button>
+</form>
+<%- include('partials/footer.ejs') %>

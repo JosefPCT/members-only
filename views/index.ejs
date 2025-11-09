@@ -6,7 +6,7 @@
       <div class="card">
         <p><%= message.title %></p>
         <p><%= message.data %></p>
-        <% if(locals.user.member) { %>
+        <% if(locals.user && locals.user.member) { %>
           <p>From: <%= message.firstname %></p>
           <p>Added: <%= message.added %></p>
         <% } %>

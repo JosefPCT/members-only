@@ -5,7 +5,7 @@ const db = require('../db/queries');
 const utils = require('./utils/passwordUtils');
 const { isAuth, isAdmin } = require('./utils/authMiddleware');
 
-
+require('dotenv').config();
 
 
 // Validation
@@ -29,6 +29,13 @@ const emailExists = async (value) => {
   return true;
 }
 
+const isCorrectSecret = (value) => {
+  if(value !== process.env.SECRET){
+    throw new Error('Incorrect secret');
+  }
+  return true;
+}
+
 const validateUser = [
   body("email").trim()
   .notEmpty().withMessage(`Email field ${emptyErr}`)
@@ -47,6 +54,12 @@ const validateUser = [
   body("admin").trim()
   .optional()
 ];
+
+const validateSecret = [
+  body("secret").trim()
+  .notEmpty().withMessage(`Secret field ${emptyErr}`)
+  .custom(isCorrectSecret)
+]
 
 // POST Routes
 
@@ -83,9 +96,22 @@ module.exports.postLogin = [
   })
 ];
 
-module.exports.becomeMemberPostRoute = (req, res, next) => {
-  res.send('Become a member POST');
-}
+module.exports.becomeMemberPostRoute = [
+  isAuth,
+  validateSecret,
+  async(req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).render('becomeMember', {
+        title: 'Become a member',
+        errors: errors.array()
+      });
+    }
+    const user = req.user;
+    await db.updateMemberStatusByUserId(user.id);
+    res.redirect('/');
+  }
+]
 
 
 
@@ -148,7 +174,10 @@ module.exports.loginFailureGetRoute = (req, res, next) => {
   res.send('You entered the wrong password.');
 }
 
-module.exports.becomeMemberGetRoute = (req, res, next) => {
-  res.send('Become a member');
-}
+module.exports.becomeMemberGetRoute = [
+  isAuth,
+  (req, res, next) => {
+    res.render('becomeMember', {title: 'Become a member'});
+  }
+]
 
