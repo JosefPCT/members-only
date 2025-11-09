@@ -115,7 +115,7 @@ module.exports.logoutGetRoute = (req, res, next) => {
 module.exports.getIndex = async(req, res, next) => {
   const isAuthenticated = req.isAuthenticated();
 
-  const messages = await db.getAllEmailAndUsers();
+  const messages = await db.getAllMessagesAndUsers();
 
   res.render('index', {
     title: 'Home',

@@ -44,7 +44,7 @@ module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = fa
   return rows[0];
 }
 
-module.exports.getAllEmailAndUsers = async() => {
+module.exports.getAllMessagesAndUsers = async() => {
   const sql = `
     SELECT *
     FROM users u
