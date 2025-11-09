@@ -6,6 +6,9 @@
       <div>
         <a href="/logout">Logout</a>
       </div>
+      <% if(!(locals.user.member)) { %>
+        <a href="#">Become a member</a>
+      <% } %>
     <% } %>
 
     <% if(!(locals.isAuthenticated)) { %>

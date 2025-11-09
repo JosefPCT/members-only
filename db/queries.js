@@ -33,14 +33,14 @@ module.exports.findUserById = async(id) => {
   return rows[0];
 }
 
-module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = false) => {
+module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = false, isMember = false) => {
   const sql = `
-    INSERT INTO "users"(firstname, lastname, email, hash, admin) VALUES
-    ($1, $2, $3, $4, $5)
+    INSERT INTO "users"(firstname, lastname, email, hash, admin, member) VALUES
+    ($1, $2, $3, $4, $5, $6)
     RETURNING *;
   `;
 
-  const { rows } = await pool.query(sql, [firstname, lastname, email, hash, isAdmin]);
+  const { rows } = await pool.query(sql, [firstname, lastname, email, hash, isAdmin, isMember]);
   return rows[0];
 }
 

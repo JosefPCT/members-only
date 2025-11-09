@@ -3,10 +3,14 @@
   <h1>Home Page</h1>
   <% if(locals.messages) { %> 
     <% messages.forEach(message => { %>
-      <p><%= message.title %></p>
-      <p><%= message.data %></p>
-      <p>From: <%= message.firstname %></p>
-      <p>Added: <%= message.added %></p>
+      <div class="card">
+        <p><%= message.title %></p>
+        <p><%= message.data %></p>
+        <% if(locals.user.member) { %>
+          <p>From: <%= message.firstname %></p>
+          <p>Added: <%= message.added %></p>
+        <% } %>
+      </div>
     <% }); %>
   <% } %>
 </main>
