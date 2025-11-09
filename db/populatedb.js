@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS users (
   lastname varchar (255),
   email varchar (255),
   hash TEXT,
-  admin BOOLEAN
+  admin BOOLEAN,
+  member BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS messages (
