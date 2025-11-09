@@ -83,6 +83,9 @@ module.exports.postLogin = [
   })
 ];
 
+module.exports.becomeMemberPostRoute = (req, res, next) => {
+  res.send('Become a member POST');
+}
 
 
 
@@ -143,5 +146,9 @@ module.exports.loginSuccessGetRoute = (req, res, next) => {
 
 module.exports.loginFailureGetRoute = (req, res, next) => {
   res.send('You entered the wrong password.');
+}
+
+module.exports.becomeMemberGetRoute = (req, res, next) => {
+  res.send('Become a member');
 }
 

@@ -17,6 +17,9 @@ router.post('/login', controller.postLogin);
 router.get('/login-success', controller.loginSuccessGetRoute);
 router.get('/login-failure', controller.loginFailureGetRoute);
 
+router.get('/become-a-member', controller.becomeMemberGetRoute);
+router.post('/become-a-member', controller.becomeMemberPostRoute);
+
 router.get('/protected-route', controller.protectedGetRoute);
 router.get('/admin-route', controller.adminGetRoute);
 router.get('/logout', controller.logoutGetRoute);
