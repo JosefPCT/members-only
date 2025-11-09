@@ -1,7 +1,16 @@
 <nav>
     <% if(locals.isAuthenticated) { %>
       <div>
-        <p>Hello <% if(user.member) { %> Member<% } %> , <%= user.firstname %></p>
+        <p>
+          Hello 
+          <% if(user.member) { %> 
+            Club Member
+          <% } %>,
+          <%= user.firstname %>
+
+          <% if(user.admin) { %>
+           (admin)
+          <% } %></p>
       </div>
       <div>
         <a href="/logout">Logout</a>

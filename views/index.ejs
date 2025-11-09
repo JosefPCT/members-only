@@ -10,6 +10,10 @@
           <p>From: <%= message.firstname %></p>
           <p>Added: <%= message.added %></p>
         <% } %>
+
+        <% if(locals.user.admin)  {%>
+          <a href="#">Delete</a>
+        <% } %>
       </div>
     <% }); %>
   <% } %>

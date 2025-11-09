@@ -80,7 +80,7 @@ module.exports.postRegister = [
     const hash = hashedPassword.hash;
 
     if(admin){
-      await db.insertUser(first_name, last_name, email, hash, true)
+      await db.insertUser(first_name, last_name, email, hash, true, true)
     } else {
       await db.insertUser(first_name, last_name, email, hash);
     }
