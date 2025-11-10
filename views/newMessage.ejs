@@ -1,5 +1,6 @@
 <%- include('partials/header.ejs') %>
 <h1>New Message Form</h1>
+<%- include('partials/errors.ejs') %>
 <form action="/messages/new" method="post">
   <label for="title">Title: </label>
   <input type="text" name="title" id="title" required>
@@ -9,5 +10,5 @@
   
   <button type="submit">Send Message</button>
 </form>
-<%- include('partials/errors.ejs') %>
+
 <%- include('partials/footer.ejs') %>

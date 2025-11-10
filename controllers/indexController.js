@@ -61,6 +61,13 @@ const validateSecret = [
   .custom(isCorrectSecret)
 ]
 
+const validateMessage = [
+  body("title").trim()
+  .notEmpty().withMessage(`Title field ${emptyErr}`),
+  body("message_data").trim()
+  .notEmpty().withMessage(`Body field ${emptyErr}`) 
+]
+
 // POST Routes
 
 module.exports.postRegister = [
@@ -115,9 +122,17 @@ module.exports.becomeMemberPostRoute = [
 
 module.exports.newMessagePostRoute = [
   isAuth,
+  validateMessage,
   async(req, res, next) => {
-
-    const { title, message_data } = req.body;
+    // const { title, message_data } = req.body;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).render('newMessage', {
+        title: 'New message',
+        errors: errors.array()
+      });
+    }
+    const { title, message_data } = matchedData(req);
     const message = await db.insertAndReturnNewMessage(title, message_data);
     await db.insertRelationUserAndMessage(req.user.id, message.id);
     res.redirect('/');
