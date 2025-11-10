@@ -113,6 +113,17 @@ module.exports.becomeMemberPostRoute = [
   }
 ]
 
+module.exports.newMessagePostRoute = [
+  isAuth,
+  async(req, res, next) => {
+
+    const { title, message_data } = req.body;
+    const message = await db.insertAndReturnNewMessage(title, message_data);
+    await db.insertRelationUserAndMessage(req.user.id, message.id);
+    res.redirect('/');
+  }
+]
+
 
 
 // GET Routes
@@ -181,3 +192,9 @@ module.exports.becomeMemberGetRoute = [
   }
 ]
 
+module.exports.newMessageGetRoute = [
+  isAuth,
+  (req, res, next) => {
+    res.render('newMessage', {title: 'New Message'});
+  }
+]

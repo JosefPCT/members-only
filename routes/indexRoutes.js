@@ -17,11 +17,17 @@ router.post('/login', controller.postLogin);
 router.get('/login-success', controller.loginSuccessGetRoute);
 router.get('/login-failure', controller.loginFailureGetRoute);
 
+router.get('/logout', controller.logoutGetRoute);
+
 router.get('/become-a-member', controller.becomeMemberGetRoute);
 router.post('/become-a-member', controller.becomeMemberPostRoute);
 
+router.get('/messages/new', controller.newMessageGetRoute);
+router.post('/messages/new', controller.newMessagePostRoute);
+
+
 router.get('/protected-route', controller.protectedGetRoute);
 router.get('/admin-route', controller.adminGetRoute);
-router.get('/logout', controller.logoutGetRoute);
+
 
 module.exports = router;

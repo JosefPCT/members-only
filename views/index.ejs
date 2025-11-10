@@ -1,7 +1,12 @@
 <%- include('partials/header.ejs') %>
 <main>
   <h1>Home Page</h1>
-  <% if(locals.messages) { %> 
+  <% if(locals.messages) { %>
+    <% if((locals.user && (locals.user.member))) { %> 
+        <a href="/messages/new">
+          <button>Send New Message</button>
+        </a>
+    <% } %>
     <% messages.forEach(message => { %>
       <div class="card">
         <p><%= message.title %></p>
@@ -11,7 +16,7 @@
           <p>Added: <%= message.added %></p>
         <% } %>
 
-        <% if(locals.user.admin)  {%>
+        <% if(locals.user && locals.user.admin)  {%>
           <a href="#">Delete</a>
         <% } %>
       </div>

@@ -44,6 +44,26 @@ module.exports.insertUser = async(firstname, lastname, email, hash, isAdmin = fa
   return rows[0];
 }
 
+module.exports.insertAndReturnNewMessage = async(title, data) => {
+  const sql = `
+    INSERT INTO "messages"(title, data) VALUES
+    ($1, $2)
+    RETURNING *;
+  `;
+
+   const { rows } = await pool.query(sql, [title, data]);
+   return rows[0];
+}
+
+module.exports.insertRelationUserAndMessage = async(user_id, message_id) => {
+  const sql = `
+    INSERT INTO "users_messages" VALUES
+    ($1, $2)
+  `;
+
+  await pool.query(sql, [user_id, message_id]);
+}
+
 module.exports.updateMemberStatusByUserId = async(id) => {
   const sql = `
     UPDATE "users"
@@ -59,7 +79,8 @@ module.exports.getAllMessagesAndUsers = async() => {
     SELECT *
     FROM users u
     JOIN users_messages um ON u.id = um.user_id
-    JOIN messages m ON m.id = um.message_id;
+    JOIN messages m ON m.id = um.message_id
+    ORDER BY m.added DESC;
   `;
 
   const { rows }  = await pool.query(sql);
