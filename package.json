@@ -4,6 +4,7 @@
   "description": "A project made with Node and Express. Differentiate an authorized user from an unauthorized one.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
