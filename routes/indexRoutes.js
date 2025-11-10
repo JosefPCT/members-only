@@ -25,6 +25,7 @@ router.post('/become-a-member', controller.becomeMemberPostRoute);
 router.get('/messages/new', controller.newMessageGetRoute);
 router.post('/messages/new', controller.newMessagePostRoute);
 
+router.post('/messages/:message_id/delete', controller.deleteMessagePostRoute);
 
 router.get('/protected-route', controller.protectedGetRoute);
 router.get('/admin-route', controller.adminGetRoute);

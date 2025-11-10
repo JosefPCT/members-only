@@ -74,6 +74,15 @@ module.exports.updateMemberStatusByUserId = async(id) => {
   await pool.query(sql, [id]);
 }
 
+module.exports.deleteMessageById = async(id) => {
+  const sql = `
+    DELETE FROM "messages"
+    WHERE id = $1
+  `;
+
+  await pool.query(sql, [id]);
+}
+
 module.exports.getAllMessagesAndUsers = async() => {
   const sql = `
     SELECT *

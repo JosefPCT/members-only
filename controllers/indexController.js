@@ -124,6 +124,16 @@ module.exports.newMessagePostRoute = [
   }
 ]
 
+module.exports.deleteMessagePostRoute = [
+  isAuth,
+  isAdmin,
+  async(req, res, next) => {
+    const { message_id } = req.params;
+    console.log(req.body);
+    await db.deleteMessageById(message_id);
+    res.redirect('/');
+  }
+]
 
 
 // GET Routes
