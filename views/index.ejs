@@ -1,29 +1,42 @@
 <%- include('partials/header.ejs') %>
 <main>
-  <h1>Home Page</h1>
+  <h1>Clubhouse Message Board</h1>
+  <% if(locals.user) { %>
+    <p>
+      Hello
+      <% if(user.member) { %>
+        Club Member
+      <% } %>,
+      <%= user.firstname %>
+      <% if(user.admin) { %>
+        (admin)
+      <% } %>
+      </p>
+  <% } %>
   <% if(locals.messages) { %>
     <% if((locals.user && (locals.user.member))) { %> 
         <a href="/messages/new">
           <button>Send New Message</button>
         </a>
     <% } %>
-    <% messages.forEach(message => { %>
-      <div class="card">
-        <p><%= message.title %></p>
-        <p><%= message.data %></p>
-        <% if(locals.user && locals.user.member) { %>
-          <p>From: <%= message.firstname %></p>
-          <p>Added: <%= message.added %></p>
-        <% } %>
-
-        <% if(locals.user && locals.user.admin)  {%>
-          <form action='/messages/<%= message.id %>/delete' method="post">
-            <input type="hidden" name="_METHOD" value="DELETE">
-            <button type="submit">Delete</button>
-          </form>
-        <% } %>
-      </div>
-    <% }); %>
+    <div class="card halfWidth">
+      <% messages.forEach(message => { %>
+        <div class="card">
+          <p><%= message.title %></p>
+          <p><%= message.data %></p>
+          <% if(locals.user && locals.user.member) { %>
+            <p>From: <%= message.firstname %></p>
+            <p>Added: <%= message.added %></p>
+          <% } %>
+          <% if(locals.user && locals.user.admin)  {%>
+            <form action='/messages/<%= message.id %>/delete' method="post">
+              <input type="hidden" name="_METHOD" value="DELETE">
+              <button type="submit">Delete</button>
+            </form>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
   <% } %>
 </main>
 <%- include('partials/footer.ejs') %>

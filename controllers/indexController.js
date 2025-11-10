@@ -205,6 +205,10 @@ module.exports.becomeMemberGetRoute = [
 module.exports.newMessageGetRoute = [
   isAuth,
   (req, res, next) => {
-    res.render('newMessage', {title: 'New Message'});
+    
+    res.render('newMessage', {
+      title: 'New Message',
+      user: req.user
+    });
   }
 ]

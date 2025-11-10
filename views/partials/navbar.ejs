@@ -1,27 +1,22 @@
 <nav>
-    <% if(locals.isAuthenticated) { %>
-      <div>
-        <p>
-          Hello 
-          <% if(user.member) { %> 
-            Club Member
-          <% } %>,
-          <%= user.firstname %>
 
-          <% if(user.admin) { %>
-           (admin)
-          <% } %></p>
+    <% if(locals.user) { %>
+      <div class="row">
+        <div>
+          <a href="/">Home</a>
+        </div>
+        <div>
+          <a href="/logout">Logout</a>
+          <% if((locals.user && (!(locals.user.member)))) { %>
+            <a href="/become-a-member">Become a member</a>
+          <% } %>
+        </div>
       </div>
-      <div>
-        <a href="/logout">Logout</a>
-      </div>
-      <% if((locals.user && (!(locals.user.member)))) { %>
-        <a href="/become-a-member">Become a member</a>
-      <% } %>
+      
     <% } %>
 
-    <% if(!(locals.isAuthenticated)) { %>
-      <div>
+    <% if(!(locals.user)) { %>
+      <div class="">
         <a href="/register">Sign up</a>
         <a href="/login">Login</a>
       </div>
